@@ -14,7 +14,6 @@ def parse_data(data,player):
                     for v in d[2]:
                         player.playlist_append(v)
                     player.playlist_pos = 0
-                    print(player.video_format())
                     player.wait_for_playback()
 
 class controller:
