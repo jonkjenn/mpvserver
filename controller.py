@@ -17,6 +17,12 @@ def parse_data(data,player):
                     #player.wait_for_playback()
                 elif d[1] == "quit":
                     player.quit()
+                    player.terminate()
+                elif d[1] == "start":
+                    player = mpv.MPV(ytdl=True, input_default_bindings=True, input_vo_keyboard=True)
+                    player["ytdl-format"] = "bestvideo[height<=?720]+bestaudio/best"
+                    player.fullscreen = True
+    return player
 
 class controller:
     def __init__(self):
@@ -34,7 +40,7 @@ class controller:
             if not self.server.inq.empty():
                 try:
                     data = self.server.inq.get(timeout=1)
-                    parse_data(data,self.player)
+                    self.player = parse_data(data,self.player)
                 except queue.Empty:
                     pass
             sleep(0.1)
