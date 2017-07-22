@@ -14,7 +14,9 @@ def parse_data(data,player):
                     for v in d[2]:
                         player.playlist_append(v)
                     player.playlist_pos = 0
-                    player.wait_for_playback()
+                    #player.wait_for_playback()
+                elif d[1] == "quit":
+                    player.quit()
 
 class controller:
     def __init__(self):
@@ -22,6 +24,7 @@ class controller:
         self.outq = queue.Queue()
         self.player = mpv.MPV(ytdl=True, input_default_bindings=True, input_vo_keyboard=True)
         self.player["ytdl-format"] = "bestvideo[height<=?720]+bestaudio/best"
+        self.player.fullscreen = True
         self.server = server.server(self.outq)
 
         self.loop()
